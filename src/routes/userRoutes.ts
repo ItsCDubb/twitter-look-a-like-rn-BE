@@ -5,6 +5,7 @@ const router = Router();
 const prisma = new PrismaClient();
 
 // Create User
+// curl command: curl -X POST -H 'Content-Type: application/json' -d '{\"name\": \"Elon Musk\", \"email\": \"doge@twitter.com\", \"username\": \"elon\"}' http://localhost:3000/user/
 router.post("/", async (req, res) => {
   const { email, name, username } = req.body;
   try {
@@ -48,7 +49,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 // Delete user
-// curl command: curl -X DELETE http://localhost:3000/user/3
+// curl command: curl -X DELETE http://localhost:3000/user/id
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   await prisma.user.delete({ where: { id: Number(id) } });
