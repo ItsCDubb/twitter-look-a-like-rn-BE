@@ -42,7 +42,7 @@ router.get("/:id", async (req, res) => {
   res.json(user);
 });
 // Update user
-// curl command: curl -X PUT -H 'Content-Type: application/json' -d '{\"name\": \"Chris\", \"bio\": \"Hello!\"}' http://localhost:3000/user/id
+// curl command: curl -X PUT -H 'Content-Type: application/json' -d '{\"name\": \"Chris\", \"bio\": \"Hello!\"}' http://localhost:3000/user/[id]
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
   const { bio, name, image } = req.body;
@@ -57,7 +57,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 // Delete user
-// curl command: curl -X DELETE http://localhost:3000/user/id
+// curl command: curl -X DELETE http://localhost:3000/user/[id]
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   await prisma.user.delete({ where: { id: Number(id) } });

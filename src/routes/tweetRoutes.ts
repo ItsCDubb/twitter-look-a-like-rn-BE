@@ -6,13 +6,15 @@ const prisma = new PrismaClient();
 
 // Create Tweet
 router.post("/", async (req, res) => {
-  const { content, image, userId } = req.body;
+  const { content, image } = req.body;
+  // @ts-ignore
+  const user = req.user;
   try {
     const result = await prisma.tweet.create({
       data: {
         content,
         image,
-        userId, // TODO manage based on authenticated user
+        userId: user.id,
       },
     });
     res.json(result);
@@ -42,13 +44,13 @@ router.get("/:id", async (req, res) => {
   res.json(tweet);
 });
 // Update Tweet
-// curl command: curl -X PUT -H 'Content-Type: application/json' -d '{\"name\": \"Chris\", \"bio\": \"Hello!\"}' http://localhost:3000/user/id
+// curl command: curl -X PUT -H 'Content-Type: application/json' -d '{\"name\": \"Chris\", \"bio\": \"Hello!\"}' http://localhost:3000/tweet/[id]
 router.put("/:id", (req, res) => {
   const { id } = req.params;
   res.status(501).json({ error: `Not Implemented: ${id}` });
 });
 // Delete Tweet
-// curl command: curl -X DELETE http://localhost:3000/tweet/id
+// curl command: curl -X DELETE http://localhost:3000/tweet/[id]
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   await prisma.tweet.delete({ where: { id: Number(id) } });
